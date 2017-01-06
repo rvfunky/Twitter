@@ -10,8 +10,18 @@ exports.insertTweet=function(tweetData,email,callback){
         }
     }, query);
 }
+exports.insertRetweet=function(tweetData,email,o_tweeter_name,callback){
+    var query="insert into tweets(tweet,email,o_tweeter_name) values('"+tweetData+"','"+email+"','"+o_tweeter_name+"')";
+    mysql.fetchData(function (err,results) {
+        if(err){
+            callback(results);
+        }else{
+            callback(results);
+        }
+    },query);
+}
 exports.getTweets=function(email,callback){
-    var query="select u.fullname,u.email,t.tweet from users u,tweets t where u.email in (select following_email from follow where follower_email='"+email+"') and t.email=u.email";
+    var query="select u.fullname,u.email,t.tweet,t.o_tweeter_name from users u,tweets t where u.email in (select following_email from follow where follower_email='"+email+"') and t.email=u.email";
     mysql.fetchData(function (err, results) {
         if (err) {
             callback(results);

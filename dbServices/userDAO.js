@@ -13,10 +13,10 @@ exports.createUser=function(fullname,email,password,callback) {
     
         mysql.fetchData(function (err, results) {
             if (err) {
-                callback(results);
+                callback({statusCode:404,result:results});
 
             } else {
-                callback(results);
+                callback({statusCode:200,result:results});
             }
         }, finalquery);
     
@@ -48,38 +48,82 @@ exports.searchUser=function(searchEmail,callback){
         }
     },query);
 };
-exports.getStats=function(email,items,callback){
-    // 1st para in async.each() is the array of items
-    queries[0]="select count(tweet_id) as statistic from tweets where email='"+email+"'";
-    queries[1]="select count(following_email) as statistic from follow where follower_email='"+email+"'";
-    queries[2]="select count(follower_email) as statistic from follow where following_email='"+email+"'";
-    stats=[];
-    async.each(items, function(item,cb){
-                // Call an asynchronous function, often a save() to DB
-                var query;
-                if (item == "tweets") {
-                    query = queries[0];
-                }
-                else if (item == "following") {
-                    query = queries[1];
-                }
-                else  {
-                    query = queries[2];
-                }
-                mysql.fetchData(function (err, results) {
-                    if (err) {
-                        callback2(results);
-                        cb();
+exports.getStats=function(email,cb){
+    async.parallel({
+        name: function(callback) {
+            var query="select fullname from users where email='"+email+"'";
+            mysql.fetchData(function (err, results) {
+                if (err) {
+                    callback(null,results);
 
-                    } else {
-                        callback2(item,results[0].statistic);
-                        cb();
-                    }
-                }, query);
+                } else {
+                    callback(null,results[0].fullname);
+                                    }
+            }, query);
+        },
+        following: function(callback) {
+            var query="select count(*) as following from follow where follower_email='"+email+"'";
+            mysql.fetchData(function (err, results) {
+                if (err) {
+                    callback(null,results);
 
+                } else {
+                    callback(null,results[0].following);
+                                    }
+            }, query);
+        },
+        followers: function(callback) {
+            var query="select count(*) as followers from follow where following_email='"+email+"'";
+            mysql.fetchData(function (err, results) {
+                if (err) {
+                    callback(null,results);
 
-        }, function (err) {
-            callback(stats);
+                } else {
+                    callback(null,results[0].followers);
+                }
+            }, query);
+        },
+        tweetCount: function(callback) {
+            var query="select count(*) as tweetCount from tweets where email='"+email+"'";
+            mysql.fetchData(function (err, results) {
+                if (err) {
+                    callback(null,results);
+
+                } else {
+                    callback(null,results[0].tweetCount);
+                }
+            }, query);
+        },
+    }, function(err, results) {
+        // results is now equals to: {one: 'abc\n', two: 'xyz\n'}
+        cb(results);
+    });
+};
+exports.updateProfile=function(email,fullname,twitterHandle,gender,birthday,mobile,callback){
+    var query="replace into profile values('"+email+"','"+fullname+"','"+twitterHandle+"','"+gender+"','"+birthday+"','"+mobile+"')";
+    console.log(query);
+    mysql.fetchData(function(err,results) {
+        if (err) {
+            callback(results);
+            console.log(err);
+
+        } else {
+            callback(results);
+            console.log(results);
         }
-    );
+    },query);
+};
+exports.getProfile=function(email,callback){
+    var query="select *from profile where email='"+email+"'";
+    console.log(query);
+    mysql.fetchData(function(err,results) {
+        if (err) {
+            callback(results);
+            console.log(err);
+
+        } else {
+            callback(results);
+            console.log(results);
+        }
+    },query);
 };

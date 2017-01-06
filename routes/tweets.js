@@ -20,6 +20,23 @@ exports.insertTweet=function(req,res){
        
     });
 }
+exports.insertRetweet=function(req,res){
+    var email=req.session.email;
+    var tweetData=req.body.tweet;
+    var origTweeter=req.body.o_tweeter_name;
+    tweetsDAO.insertRetweet(tweetData,email,origTweeter,function (result) {
+        if(result) {
+            json_responses = {
+                "statusCode": 200,
+            }
+        }else{
+            json_responses = {
+                "statusCode": 401,
+                }
+            }
+            res.send(json_responses);
+    })
+}
 exports.getTweets=function(req,res){
     var email=req.session.email;
     tweetsDAO.getTweets(email,function(result){
@@ -40,16 +57,12 @@ exports.getTweets=function(req,res){
 }
 exports.getStats=function(req,res){
     var email=req.session.email;
-    var items=['tweets','following','followers'];
-    userDAO.getStats(email,items,function(result){
-        console.log("working"+result);
-        console.log(result['tweets']);
-        if(result){
+    userDAO.getStats(email,function(results){
+            if(results){
+            console.log(results);
             json_responses={
                 "statusCode":200,
-                "tweetCount":result['tweets'],
-                "followingCount":result['following'],
-                "followersCount":result['followers']
+                "stats":results
             }
             res.send(json_responses);
         }else{

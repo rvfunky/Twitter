@@ -9,22 +9,20 @@
 
 
                 <a title="Mert Salih Kaplan" href="#" class="twPc-avatarLink">
-                    <img alt="Mert Salih Kaplan" src="#" class="twPc-avatarImg">
+                    <img alt="Mert Salih Kaplan" src="/images/logo.png" class="twPc-avatarImg">
                 </a>
 
                 <div class="twPc-divUser">
                     <div class="twPc-divName">
-                        <a href="#">Mert S. Kaplan</a>
+                        <a href="#">{{name}}</a>
                     </div>
-			<span>
-				<a href="#">@<span>mertskaplan</span></a>
-			</span>
+
                 </div>
 
                 <div class="twPc-divStats">
                     <ul class="twPc-Arrange">
                         <li class="twPc-ArrangeSizeFit">
-                            <a href="https://twitter.com/mertskaplan" title="9.840 Tweet">
+                            <a href="#" title="9.840 Tweet">
                                 <span class="twPc-StatLabel twPc-block">Tweets</span>
                                 <span class="twPc-StatValue">{{tweetCount}}</span>
                             </a>
@@ -69,7 +67,7 @@
         </div>
             <div class="col-sm-12" ng-init="getTweets()" style="margin-left: 6px;margin-top: 6px;padding-right:0px;padding-left: 0px;background-color: white ">
                 <div ng-repeat="tweet in data">
-                    <div class="container-fluid" style="background-color: #ffffff;margin: 0px;border-bottom: 1px solid #e1e8ed;border-bottom-width: 1px;border-bottom-style: solid;border-bottom-color: rgb(225, 232, 237);">
+                    <div ng-if="tweet.o_tweeter_name==null" class="container-fluid" style="background-color: #ffffff;margin: 0px;border-bottom: 1px solid #e1e8ed;border-bottom-width: 1px;border-bottom-style: solid;border-bottom-color: rgb(225, 232, 237);">
                         <div class="row">
                             <div class="col-sm-2 container-fluid" style="padding-left: 5px;padding-right: 5px">
                                 <img src="/images/logo.png" class="img-responsive img-rounded" alt="logo" width="48" height="48" style="background-color:grey;margin-right: 0px;margin-top: 5px;margin-bottom: 15px">
@@ -80,6 +78,31 @@
                                 </div>
                                 <div class="row">
                                     <p class="tweet">{{tweet.tweet}}</p>
+                                </div>
+                                <div class="row" style="margin-bottom:5px;color:#1da1f2">
+                                    <button type="button" class="btn btn-default btn-sm" style="background-color:#1da1f2;color:white" ng-click="retweet(tweet.tweet,tweet.fullname)">Retweet</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div ng-if="tweet.o_tweeter_name!=null" class="container-fluid" style="background-color: #ffffff;margin: 0px;border-bottom: 1px solid #e1e8ed;border-bottom-width: 1px;border-bottom-style: solid;border-bottom-color: rgb(225, 232, 237);">
+                        <div class="row">
+                            <div class="col-sm-2 container-fluid" style="padding-left: 5px;padding-right: 5px">
+                                <img src="/images/logo.png" class="img-responsive img-rounded" alt="logo" width="48" height="48" style="background-color:grey;margin-right: 0px;margin-top: 5px;margin-bottom: 15px">
+                            </div>
+                            <div class="col-sm-9 container-fluid" style="margin-left: -10px">
+                                <div class="row">
+                                    <i class="fullname">{{tweet.fullname}}<small style="font-weight: normal"> retweeted - </small></i>
+
+                                </div>
+                                <div  class="container-fluid" style="border:1px solid #e1e8ed;margin-bottom: 5px;padding-left: 20px">
+                                    <div class="row">
+                                        <strong class="fullname">{{tweet.o_tweeter_name}}</strong>
+                                    </div>
+                                    <div class="row">
+                                        <p class="tweet">{{tweet.tweet}}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -10,19 +10,19 @@
                 <li class="twPc-ArrangeSizeFit">
                     <a ui-sref="app">
                         <span class="twPc-StatLabel twPc-block">Tweets</span>
-                        <span class="twPc-StatValue"></span>
+                        <span class="twPc-StatValue">{{tweetCount}}</span>
                     </a>
                 </li>
                 <li class="twPc-ArrangeSizeFit">
                     <a ui-sref="app.followingUsersState">
                         <span class="twPc-StatLabel twPc-block">Following</span>
-                        <span class="twPc-StatValue"></span>
+                        <span class="twPc-StatValue">{{followingCount}}</span>
                     </a>
                 </li>
                 <li class="twPc-ArrangeSizeFit">
                     <a ui-sref="#">
                         <span class="twPc-StatLabel twPc-block">Followers</span>
-                        <span class="twPc-StatValue"></span>
+                        <span class="twPc-StatValue">{{followersCount}}</span>
                     </a>
                 </li>
             </ul>
@@ -48,9 +48,7 @@
                         <div class="twPc-divName">
                             {{user.fullname}}
                         </div>
-                        <span>
-                            <a href="#">@<span>mertskaplan</span></a>
-                        </span>
+
                     </div>
 
 

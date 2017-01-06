@@ -3,7 +3,7 @@ exports.login=function(req,res){
     var email=req.body.email;
     var password=req.body.password;
     userDAO.authenticateUser(email,password,function(result){
-        if(result.length>0){
+        if(result.length){
             req.session.email=email;
             json_responses = {
                 "statusCode": 200,

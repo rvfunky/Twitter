@@ -13,6 +13,7 @@ var login=require('./routes/login');
 var tweets=require('./routes/tweets');
 var search=require('./routes/search');
 var follow=require('./routes/follow');
+var profile=require('./routes/profile');
 var app = express();
 
 
@@ -38,8 +39,10 @@ app.use('/', routes);
 app.use('/users', users);
 app.post('/signup',signup.createUser);
 app.post('/login',login.login);
+app.get('/test',function(req,res){console.log()});
 app.get('/userMainPage',login.redirectToUserMainPage);
 app.post('/insertTweet',tweets.insertTweet);
+app.post('/insertRetweet',tweets.insertRetweet);
 app.post('/searchUser',search.searchUser);
 app.post('/followUser',search.followUser);
 app.get('/getFollowingUsers',follow.getFollowingUsers);
@@ -48,6 +51,8 @@ app.get('/getTweets',tweets.getTweets);
 app.post('/searchHashTags',search.searchHashTags);
 app.get('/logout',login.logout);
 app.get('/getStats',tweets.getStats);
+app.post('/updateProfile',profile.updateProfile);
+app.get('/getProfile',profile.getProfile);
 // error handlers
 
 // development error handler

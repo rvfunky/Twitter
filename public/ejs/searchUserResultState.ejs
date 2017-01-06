@@ -6,27 +6,27 @@
     </div>
     <div class="col-sm-offset-3">
         <div class="col-sm-7 twPc-divStats">
-        <ul class="twPc-Arrange">
-            <li class="twPc-ArrangeSizeFit">
-                <a ui-sref="#">
-                    <span class="twPc-StatLabel twPc-block">Tweets</span>
-                    <span class="twPc-StatValue"></span>
-                </a>
-            </li>
-            <li class="twPc-ArrangeSizeFit">
-                <a ui-sref="app.followingUsersState">
-                    <span class="twPc-StatLabel twPc-block">Following</span>
-                    <span class="twPc-StatValue"></span>
-                </a>
-            </li>
-            <li class="twPc-ArrangeSizeFit">
-                <a ui-sref="app.followersUsersState">
-                    <span class="twPc-StatLabel twPc-block">Followers</span>
-                    <span class="twPc-StatValue"></span>
-                </a>
-            </li>
-        </ul>
-    </div>
+            <ul class="twPc-Arrange">
+                <li class="twPc-ArrangeSizeFit">
+                    <a ui-sref="app">
+                        <span class="twPc-StatLabel twPc-block">Tweets</span>
+                        <span class="twPc-StatValue">{{tweetCount}}</span>
+                    </a>
+                </li>
+                <li class="twPc-ArrangeSizeFit">
+                    <a ui-sref="#">
+                        <span class="twPc-StatLabel twPc-block">Following</span>
+                        <span class="twPc-StatValue">{{followingCount}}</span>
+                    </a>
+                </li>
+                <li class="twPc-ArrangeSizeFit">
+                    <a ui-sref="app.followersUsersState">
+                        <span class="twPc-StatLabel twPc-block">Followers</span>
+                        <span class="twPc-StatValue">{{followersCount}}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 <div class="container-fluid col-sm-offset-3 ">
@@ -46,14 +46,12 @@
             <div class="twPc-divName">
                 {{check[0].fullname}}
             </div>
-			<span>
-				<a href="#">@<span>mertskaplan</span></a>
-			</span>
+
         </div>
 
 
     </div>
 
 </div>
-    {{check}}
+
 </div>

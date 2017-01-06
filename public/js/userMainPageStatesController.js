@@ -62,6 +62,20 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 
             }
         })
+        .state('app.profile', {
+            url: 'profile',
+            views: {
+                'header@':{
+                    templateUrl: '/ejs/tweetFeedHeader.ejs',
+                    controller: 'searchController'
+                },
+                'content@': {
+                    templateUrl: '/ejs/profileState.ejs',
+                    controller: 'profileStateController'
+                }
+
+            }
+        })
         .state('app.hashTagsResultState', {
             url: 'hashTags',
             views: {
@@ -78,7 +92,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         })
     
 })
-routerApp.controller('tweetFeedController',['$scope','$http','$state',function($scope,$http,$state){
+routerApp.controller('tweetFeedController',['$scope','$http','$state','$window',function($scope,$http,$state,$window){
    $scope.makeTweet=function(){
        $http({
            method:'post',
@@ -107,6 +121,7 @@ routerApp.controller('tweetFeedController',['$scope','$http','$state',function($
 
         }).success(function(data){
             if(data.statusCode==200){
+                console.log(data);
                 $scope.data=data.result;
             }
             else{
@@ -125,16 +140,34 @@ routerApp.controller('tweetFeedController',['$scope','$http','$state',function($
         }).success(function(data){
             console.log(data);
             if(data.statusCode==200){
-                $scope.tweetCount=data.tweetCount;
-                $scope.followingCount=data.followingCount;
-                $scope.followersCount=data.followersCount;
-
+                $scope.tweetCount=data.stats.tweetCount;
+                $scope.followingCount=data.stats.following;
+                $scope.followersCount=data.stats.followers;
+                $scope.name=data.stats.name;
+                $window.sessionStorage.setItem("name",data.stats.name);
+                $window.sessionStorage.setItem("tweetCount",data.stats.tweetCount);
+                $window.sessionStorage.setItem("followingCount",data.stats.following);
+                $window.sessionStorage.setItem("followersCount",data.stats.followers);
             }
             else{
 
 
             }
         }).error(function(error){
+
+        })
+    }
+    $scope.retweet=function(tweet,fullname){
+        $http({
+            method:'post',
+            url:'/insertRetweet',
+            data:{
+                "tweet":tweet,
+                "o_tweeter_name":fullname
+            }
+        }).success(function (data) {
+            alert("retweet successful");
+        }).error(function (error) {
 
         })
     }
